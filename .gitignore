@@ -1,5 +1,5 @@
 node_modules/
-db/db.json
-gen/neural-network-bundle.js
-gen/neural-pretty-bundle.js
-gen/unbundled-network.js
+db/*
+gen/*
+!db/.gitignore
+!gen/.gitignore
