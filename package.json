@@ -1,0 +1,16 @@
+{
+  "name": "neural-captcha",
+  "version": "0.0.2",
+  "description": "",
+  "main": "./src/network.js",
+  "scripts": {
+    "start": "node src/network.js",
+    "build": "node src/network.js && browserify gen/unbundled-network.js -o gen/neural-pretty-bundle.js && uglifyjs gen/neural-pretty-bundle.js -o  gen/neural-network-bundle.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Stjepan Golemac",
+  "license": "ISC",
+  "dependencies": {
+    "synaptic": "^1.0.8"
+  }
+}
