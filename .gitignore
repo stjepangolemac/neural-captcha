@@ -1,5 +1,5 @@
 node_modules/*
 db/*
 gen/*
-!db/.gitignore
-!gen/.gitignore
+!db/.gitkeep
+!gen/.gitkeep
