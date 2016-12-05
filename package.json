@@ -5,7 +5,7 @@
   "main": "./src/network.js",
   "scripts": {
     "start": "node src/network.js",
-    "build": "node src/network.js && browserify gen/unbundled-network.js -o gen/neural-pretty-bundle.js && uglifyjs gen/neural-pretty-bundle.js -o  gen/neural-network-bundle.js",
+    "build": "node src/network.js && browserify gen/temp/unbundled-network.js -o gen/temp/neural-pretty-bundle.js && uglifyjs gen/temp/neural-pretty-bundle.js -o  gen/neural-captcha-bundle.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Stjepan Golemac",

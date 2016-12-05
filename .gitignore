@@ -3,3 +3,4 @@ db/*
 gen/*
 !db/.gitkeep
 !gen/.gitkeep
+npm-debug.log
