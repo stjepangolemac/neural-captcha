@@ -20,6 +20,10 @@ Knowledge database must be properly formatted according to this template:
 ```
 Property **letter** should be a string with only one character and property **pixels** should be an array of 256 numbers.
 
+### Prerequisites
+1. `npm install -g browserify`
+2. `npm install -g uglify-js`
+
 ### How to setup
 1. `git clone https://github.com/stjepangolemac/neural-captcha.git`
 2. `npm install`
