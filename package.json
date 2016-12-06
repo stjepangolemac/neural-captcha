@@ -4,12 +4,15 @@
   "description": "",
   "main": "./src/network.js",
   "scripts": {
-    "start": "node src/network.js",
-    "build": "node src/network.js && browserify gen/temp/unbundled-network.js -o gen/temp/neural-pretty-bundle.js && uglifyjs gen/temp/neural-pretty-bundle.js -o  gen/neural-captcha-bundle.js",
+    "start": "npm run build",
+    "build": "node src/network.js && npm run browserify && npm run uglify && npm run cleanup",
+    "browserify": "browserify gen/temp/unbundled-network.js -o gen/temp/neural-pretty-bundle.js",
+    "uglify": "uglifyjs gen/temp/neural-pretty-bundle.js -o  gen/neural-captcha-bundle.js",
+    "cleanup": "rm -rf gen/temp/*",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Stjepan Golemac",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "synaptic": "^1.0.8"
   }
