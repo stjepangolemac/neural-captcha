@@ -31,3 +31,8 @@ Property **letter** should be a string with only one character and property **pi
 4. Call `neural()` and pass the pixels of the letter you want it to recognize: `console.log(neural([0,0,0,1,1,...])`
 5. The result is an array of all letters along with their chances
 
+### About database creation
+The database is not provided here but here are couple of directions for creating your own. Firstly, this neural network works with 16x16 images and therefore has 256 input neurons. Each character is isolated, cropped and scaled to that size. It is tested and works really well with black and white images but it should work with grayscale pixels too (it should probably be trained with grayscale images then). The database I used for training had approximately 10.5k properly recognized lowercase characters (processed by humans and neural network). Code can easily be modified to accept uppercase letters and (some?) special characters.
+
+This is the type of captcha this network is trained to crack.
+![Captcha sample](sample/captcha.jpg)
