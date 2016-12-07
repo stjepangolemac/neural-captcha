@@ -5,8 +5,8 @@ gen/temp/*
 gen/save/*
 !db/.gitkeep
 !gen/.gitkeep
-
 !gen/temp/.gitkeep
 !gen/save/.gitkeep
+gen/save/network-save.json
 npm-debug.log
 test.html
