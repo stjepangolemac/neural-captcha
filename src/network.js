@@ -28,33 +28,70 @@ let trainingSet = training.makeTrainingSet(trainingSetRaw);
 console.log("Training dataset ready!"
     + "\r\n");
 
-console.log("Creating neural network...");
-let network = new Architect.Perceptron(256, charmap.length, charmap.length);
+let network;
 
-console.log("Creating network trainer..."
+console.log("Searching for saved neural network..."
     + "\r\n");
-let trainer = new Trainer(network);
+let loadedNetwork = exporter.loadNetwork();
 
-let startTime = new Date();
+if (loadedNetwork !== null) {
+    console.log("Found saved neural network...");
+    network = loadedNetwork;
 
-console.log("Started training...");
-trainer.train(trainingSet, {
-    rate: (iterations, error) => {
-        return conf.learningRate;
-    },
-    iterations: conf.iterations,
-    error: .005,
-    shuffle: true,
-    log: conf.loggingStep,
-    cost: Trainer.cost.CROSS_ENTROPY
-});
-console.log("Training finished in "
-    + ((((new Date() - startTime) % 86400000) % 3600000) / 60000).toFixed(1)
-    + " minutes!"
-    + "\r\n");
+    console.log("Creating network trainer..."
+        + "\r\n");
+    let trainer = new Trainer(network);
 
-console.log("Exporting neural network...");
-exporter.exportNetwork(network.standalone());
+    let startTime = new Date();
+
+    console.log("Started training...");
+    trainer.train(trainingSet, {
+        rate: (iterations, error) => {
+            return conf.learningRate;
+        },
+        iterations: conf.iterations,
+        error: .005,
+        shuffle: true,
+        log: conf.loggingStep,
+        cost: Trainer.cost.CROSS_ENTROPY
+    });
+    console.log("Training finished in "
+        + ((((new Date() - startTime) % 86400000) % 3600000) / 60000).toFixed(1)
+        + " minutes!"
+        + "\r\n");
+} else {
+    console.log("No saved neural network...");
+    console.log("Creating neural network...");
+    network = new Architect.Perceptron(256, charmap.length, charmap.length);
+
+    console.log("Creating network trainer..."
+        + "\r\n");
+    let trainer = new Trainer(network);
+
+    let startTime = new Date();
+
+    console.log("Started training...");
+    trainer.train(trainingSet, {
+        rate: (iterations, error) => {
+            return conf.learningRate;
+        },
+        iterations: conf.iterations,
+        error: .005,
+        shuffle: true,
+        log: conf.loggingStep,
+        cost: Trainer.cost.CROSS_ENTROPY
+    });
+    console.log("Training finished in "
+        + ((((new Date() - startTime) % 86400000) % 3600000) / 60000).toFixed(1)
+        + " minutes!"
+        + "\r\n");
+}
+
+console.log("Bundling neural network...");
+exporter.bundleNetwork(network);
+
+console.log("Saving neural network...");
+exporter.saveNetwork(network);
 
 console.log("Finished, exiting...");
 process.exit();

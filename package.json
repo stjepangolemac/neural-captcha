@@ -1,7 +1,7 @@
 {
   "name": "neural-captcha",
   "version": "0.0.2",
-  "description": "",
+  "description": "Neural network for captcha recognition",
   "main": "./src/network.js",
   "scripts": {
     "start": "npm run build",
