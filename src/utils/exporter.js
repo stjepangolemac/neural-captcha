@@ -25,10 +25,32 @@ let bundleNetwork = standaloneNetwork => {
         + "temp/unbundled-network.js", exportedModified, "utf8");
 };
 
-let saveNetwork = networkJSON => {
-    networkJSON = networkJSON.toJSON();
+let saveNetwork = network => {
+    let metadata = {};
+    if (network.metadata != {}
+        && network.metadata != null
+        && network.metadata != undefined) {
+        metadata = network.metadata;
+        metadata.iterations.push(conf.iterations);
+        metadata.learningRate.push(conf.learningRate);
+        metadata.date.push(new Date());
+
+        network = network.toJSON();
+        network.metadata = metadata;
+    } else {
+        metadata.iterations = [];
+        metadata.learningRate = [];
+        metadata.date = [];
+
+        metadata.iterations.push(conf.iterations);
+        metadata.learningRate.push(conf.learningRate);
+        metadata.date.push(new Date());
+
+        network = network.toJSON();
+        network.metadata = metadata;
+    }
     fs.writeFileSync(conf.paths.generateTo + "save/network-save.json",
-        JSON.stringify(networkJSON), "utf8");
+        JSON.stringify(network), "utf8");
 };
 
 let loadNetwork = () => {
@@ -38,8 +60,10 @@ let loadNetwork = () => {
     } catch (error) {
         return null;
     }
-    
-    return synaptic.Network.fromJSON(JSON.parse(imported));
+    imported = JSON.parse(imported);
+    let restoredNetwork = synaptic.Network.fromJSON(imported);
+    restoredNetwork.metadata = imported.metadata;
+    return restoredNetwork;
 };
 
 module.exports = {

@@ -38,6 +38,8 @@ if (loadedNetwork !== null) {
     console.log("Found saved neural network...");
     network = loadedNetwork;
 
+    console.log(JSON.stringify(network.metadata, null, " "));
+
     console.log("Creating network trainer..."
         + "\r\n");
     let trainer = new Trainer(network);
