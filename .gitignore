@@ -1,10 +1,11 @@
 node_modules/*
 db/*
 gen/*
-!db/.gitkeep
-!gen/.gitkeep
 gen/temp/*
 gen/save/*
+!db/.gitkeep
+!gen/.gitkeep
+
 !gen/temp/.gitkeep
 !gen/save/.gitkeep
 npm-debug.log
