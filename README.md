@@ -48,3 +48,6 @@ And this are the isolated characters.
 ![Character](sample/chars/c.jpg)
 ![Character](sample/chars/m.jpg)
 ![Character](sample/chars/f.jpg)
+
+### Saving, loading, and retraining
+After first training neural network will be exported to JSON and saved in gen/save/. Every subsequent `npm run build` or `npm start` will load that network and continue training if it is still in the same directory. If you want to create brand new neural network just delete or move `network-save.json` from gen/save/.
