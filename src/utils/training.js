@@ -53,7 +53,18 @@ let trainNetwork = (network, trainingSet) => {
         error: .005,
         shuffle: true,
         log: conf.loggingStep,
-        cost: Trainer.cost.CROSS_ENTROPY
+        cost: Trainer.cost.CROSS_ENTROPY,
+        schedule: {
+            every: 1,
+            do: data => {
+                process.env.NETWORK_METADATA = JSON.stringify({
+                    iterations: data.iterations,
+                    learningRate: data.rate,
+                    date: new Date(),
+                    error: data.error
+                });
+            }
+        }
     });
     console.log("Training finished in "
         + ((((new Date() - startTime) % 86400000) % 3600000) / 60000).toFixed(1)

@@ -10,6 +10,12 @@ const fs = require("fs"),
     training = require("./utils/training"),
     exporter = require("./utils/exporter");
 
+process.on('SIGTERM', function() {
+    console.log("Caught interrupt signal, finishing training...");
+
+    process.env.USER_STOPPED = true;
+});
+
 console.log("ITERATIONS: "
     + conf.iterations
     + "\r\n"
@@ -39,6 +45,7 @@ if (loadedNetwork !== null) {
     network = loadedNetwork;
 
     console.log(JSON.stringify(network.metadata, null, " "));
+    console.log("\r\n");
 
     training.trainNetwork(network, trainingSet);
 } else {
@@ -48,9 +55,6 @@ if (loadedNetwork !== null) {
 
     training.trainNetwork(network, trainingSet);
 }
-
-// To trigger the optimization?
-network.activate([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,1,1,1,1,1,0,0,1,1,1,1,0,0,0,0,0,0,1,1,1,1,0,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,0,0,1,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,0,0,0,0,0,1,1,1,0,0,0,1,1,1,1,0,0,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0]);
 
 console.log("Bundling neural network...");
 exporter.bundleNetwork(network);

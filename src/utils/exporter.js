@@ -31,20 +31,13 @@ let saveNetwork = network => {
         && network.metadata != null
         && network.metadata != undefined) {
         metadata = network.metadata;
-        metadata.iterations.push(conf.iterations);
-        metadata.learningRate.push(conf.learningRate);
-        metadata.date.push(new Date());
+        metadata.history.push(JSON.parse(process.env.NETWORK_METADATA));
 
         network = network.toJSON();
         network.metadata = metadata;
     } else {
-        metadata.iterations = [];
-        metadata.learningRate = [];
-        metadata.date = [];
-
-        metadata.iterations.push(conf.iterations);
-        metadata.learningRate.push(conf.learningRate);
-        metadata.date.push(new Date());
+        metadata.history = [];
+        metadata.history.push(JSON.parse(process.env.NETWORK_METADATA));
 
         network = network.toJSON();
         network.metadata = metadata;
