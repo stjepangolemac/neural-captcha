@@ -57,6 +57,7 @@ let trainNetwork = (network, trainingSet) => {
         schedule: {
             every: 1,
             do: data => {
+                console.log("ITERATION: " + data.iterations + ", ERROR: " + data.error);
                 process.env.NETWORK_METADATA = JSON.stringify({
                     iterations: data.iterations,
                     learningRate: data.rate,
