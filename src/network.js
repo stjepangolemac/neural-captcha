@@ -40,54 +40,17 @@ if (loadedNetwork !== null) {
 
     console.log(JSON.stringify(network.metadata, null, " "));
 
-    console.log("Creating network trainer..."
-        + "\r\n");
-    let trainer = new Trainer(network);
-
-    let startTime = new Date();
-
-    console.log("Started training...");
-    trainer.train(trainingSet, {
-        rate: (iterations, error) => {
-            return conf.learningRate;
-        },
-        iterations: conf.iterations,
-        error: .005,
-        shuffle: true,
-        log: conf.loggingStep,
-        cost: Trainer.cost.CROSS_ENTROPY
-    });
-    console.log("Training finished in "
-        + ((((new Date() - startTime) % 86400000) % 3600000) / 60000).toFixed(1)
-        + " minutes!"
-        + "\r\n");
+    training.trainNetwork(network, trainingSet);
 } else {
     console.log("No saved neural network...");
     console.log("Creating neural network...");
     network = new Architect.Perceptron(256, charmap.length, charmap.length);
 
-    console.log("Creating network trainer..."
-        + "\r\n");
-    let trainer = new Trainer(network);
-
-    let startTime = new Date();
-
-    console.log("Started training...");
-    trainer.train(trainingSet, {
-        rate: (iterations, error) => {
-            return conf.learningRate;
-        },
-        iterations: conf.iterations,
-        error: .005,
-        shuffle: true,
-        log: conf.loggingStep,
-        cost: Trainer.cost.CROSS_ENTROPY
-    });
-    console.log("Training finished in "
-        + ((((new Date() - startTime) % 86400000) % 3600000) / 60000).toFixed(1)
-        + " minutes!"
-        + "\r\n");
+    training.trainNetwork(network, trainingSet);
 }
+
+// To trigger the optimization?
+network.activate([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,1,1,1,1,1,0,0,1,1,1,1,0,0,0,0,0,0,1,1,1,1,0,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,0,0,1,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,0,0,0,0,0,1,1,1,0,0,0,1,1,1,1,0,0,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0]);
 
 console.log("Bundling neural network...");
 exporter.bundleNetwork(network);

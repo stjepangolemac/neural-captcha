@@ -1,5 +1,12 @@
 "use strict";
-const charmap = require("./charmap");
+const charmap = require("./charmap"),
+    synaptic = require("synaptic"),
+    Neuron = synaptic.Neuron,
+    Layer = synaptic.Layer,
+    Network = synaptic.Network,
+    Trainer = synaptic.Trainer,
+    Architect = synaptic.Architect,
+    conf = require("../../conf");
 
 let makeOutputs = letter => {
     if (typeof letter !== "string") {
@@ -30,6 +37,31 @@ let makeTrainingSet = rawTrainingSet => {
     return trainingSet;
 }
 
+let trainNetwork = (network, trainingSet) => {
+    console.log("Creating network trainer..."
+        + "\r\n");
+    let trainer = new Trainer(network);
+
+    let startTime = new Date();
+
+    console.log("Started training...");
+    trainer.train(trainingSet, {
+        rate: (iterations, error) => {
+            return conf.learningRate;
+        },
+        iterations: conf.iterations,
+        error: .005,
+        shuffle: true,
+        log: conf.loggingStep,
+        cost: Trainer.cost.CROSS_ENTROPY
+    });
+    console.log("Training finished in "
+        + ((((new Date() - startTime) % 86400000) % 3600000) / 60000).toFixed(1)
+        + " minutes!"
+        + "\r\n");
+}
+
 module.exports = {
-    makeTrainingSet: makeTrainingSet
+    makeTrainingSet: makeTrainingSet,
+    trainNetwork: trainNetwork
 }
