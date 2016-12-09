@@ -64,6 +64,10 @@ let trainNetwork = (network, trainingSet) => {
                     date: new Date(),
                     error: data.error
                 });
+
+                if (process.env.USER_STOPPED) {
+                    return true;
+                }
             }
         }
     });

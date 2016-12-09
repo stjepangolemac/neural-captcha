@@ -10,12 +10,6 @@ const fs = require("fs"),
     training = require("./utils/training"),
     exporter = require("./utils/exporter");
 
-process.on('SIGTERM', function() {
-    console.log("Caught interrupt signal, finishing training...");
-
-    process.env.USER_STOPPED = true;
-});
-
 console.log("ITERATIONS: "
     + conf.iterations
     + "\r\n"
